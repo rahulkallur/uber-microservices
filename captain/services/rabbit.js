@@ -1,6 +1,4 @@
 import amqp from "amqplib";
-import dotenv from "dotenv";
-dotenv.config();
 
 const RABBITMQ_URL = process.env.RABBIT_URL;
 
@@ -15,7 +13,7 @@ export const connect = async () => {
 export const subscribeToQueue = async (queue, callback) => {
   if (!channel) await connect();
   await channel.assertQueue(queue);
-  channel.consume(queue, (message) => {
+  channel.consume(queueName, (message) => {
     callback(message.content.toString());
     channel.ack(message);
   });
@@ -24,5 +22,5 @@ export const subscribeToQueue = async (queue, callback) => {
 export const publishToQueue = async (queue, message) => {
   if (!channel) await connect();
   await channel.assertQueue(queue);
-  channel.sendToQueue(queue, Buffer.from(message));
+  channel.sendToQueue(queueName, Buffer.from(message));
 };

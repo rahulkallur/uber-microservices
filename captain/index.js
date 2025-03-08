@@ -4,9 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import route from "./routes/routes.js";
-import { connect } from "./db/db.js";
-
-connect();
 
 const app = express();
 
@@ -17,7 +14,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/", route);
-
 
 if (process.env.SERVICE_PORT) {
   app.listen({ port: process.env.SERVICE_PORT }, () =>

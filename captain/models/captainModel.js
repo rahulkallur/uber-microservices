@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  isAvailable: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-export default mongoose.model("user", userSchema);
+export default mongoose.model("captain", userSchema);
